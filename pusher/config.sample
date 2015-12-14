@@ -1,0 +1,2 @@
+export PUSH_BIND_ADDR='tcp://*:5555'
+
