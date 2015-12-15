@@ -34,9 +34,9 @@ func main() {
 			log.Fatal("poll:", err)
 		}
 		for _, sk := range socks {
-			switch so := sk.Socket; so {
+			switch sk.Socket {
 			case pull:
-				s, err := so.Recv(0)
+				s, err := pull.Recv(0)
 				if err != nil {
 					log.Fatal("recv:", err)
 				}
