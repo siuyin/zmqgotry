@@ -9,7 +9,7 @@ import (
 	zmq "github.com/pebbe/zmq2"
 )
 
-const tickInterval time.Duration = 1000 * time.Millisecond
+const tickInterval time.Duration = 6000 * time.Millisecond
 
 func main() {
 	push, err := zmq.NewSocket(zmq.PUSH)

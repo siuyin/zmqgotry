@@ -26,12 +26,27 @@ func main() {
 	}
 
 	fmt.Println("Starting puller ...")
-
+	plr := zmq.NewPoller()
+	plr.Add(pull, zmq.POLLIN)
 	for {
-		s, err := pull.Recv(0)
+		socks, err := plr.Poll(3 * time.Second)
 		if err != nil {
-			log.Fatal("recv:", err)
+			log.Fatal("poll:", err)
 		}
-		fmt.Println(s)
+		for _, sk := range socks {
+			switch so := sk.Socket; so {
+			case pull:
+				s, err := so.Recv(0)
+				if err != nil {
+					log.Fatal("recv:", err)
+				}
+				fmt.Println(s)
+			}
+		}
+
+		if len(socks) == 0 {
+			fmt.Println("timeout")
+		}
+
 	}
 }
